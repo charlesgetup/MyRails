@@ -28,7 +28,10 @@
        <a href="http://www..../faq">Questions</a><br />
        <a href="http://www..../news">News</a><br />
        <a href="http://www..../contact">Contact</a><br />
-       <%= render(:partial => "cart", :object => @cart)  %>
+       <br />
+       <% hidden_div_if(@cart.items.empty?, :id => "cart") do %>
+        <%= render(:partial => "cart", :object => @cart) %>
+       <% end %>
       </div>
 
       <div id="main">

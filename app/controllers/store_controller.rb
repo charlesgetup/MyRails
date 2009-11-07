@@ -19,7 +19,7 @@ class StoreController < ApplicationController
 
    product = Product.find(params[:id])
    @cart = find_cart
-   @cart.add_product(product)
+   @current_item = @cart.add_product(product)
    respond_to do |format|
      format.js
    end
@@ -32,7 +32,16 @@ class StoreController < ApplicationController
 
   def empty_cart
     session[:cart] = nil
-    redirect_to_index('shopping cart is empty now!')
+    redirect_to_index
+  end
+
+  def checkout
+    @cart = find_cart
+    if @cart.items.empty?
+      redirect_to_index("Your cart is empty")
+    else
+      @order = Order.new
+    end
   end
 
 private
